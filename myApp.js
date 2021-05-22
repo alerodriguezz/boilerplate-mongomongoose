@@ -25,13 +25,25 @@ const createAndSavePerson = (done) => {
      
      myPerson.save(function(err, data) {
     if (err) return console.error(err);
-    done(null, data)
-    });
+    done(null, data)});
 };
 
+
+//creating multiple db instances at once 
+var arrayofPeople = [{name: "Mac Donald", age: 80, favoriteFoods: ["pizza", "fish", "fresh fruit"]},
+   {name: "Snoop Dogg", age: 4, favoriteFoods: ["eggs", "fish", "chips"]},
+   {name: "Charlie Mean", age: 32, favoriteFoods: ["eggs", "pizza", "onions"]}];
+       
+
+
 //create and save a model record instance
-const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+const createManyPeople = (arrayofPeople, done) => {
+
+     Person.create(arrayofPeople,function(err, people){
+    if (err) return console.error(err);
+    done(null, people)
+    });
+  
 };
 
 const findPeopleByName = (personName, done) => {
