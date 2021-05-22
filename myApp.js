@@ -5,7 +5,20 @@ const mongoose = require('mongoose');
 //connect to database 
 mongoose.connect(process.env.MONGO_URI);
 
-let Person;
+/*Assign Mongoose Schema to a variable
+This is not necessary but will make your code easier to read */
+const Schema = mongoose.Schema;
+
+
+//create schema
+const personSchema = new Schema({
+name : {type: String, required: true},
+age: Number ,
+favoriteFoods: [String]
+});
+
+// create person model from schema
+const Person = mongoose.model("Person", personSchema);
 
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
