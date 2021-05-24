@@ -20,23 +20,20 @@ favoriteFoods: [String]
 // create person model from schema
 const Person = mongoose.model("Person", personSchema);
 
-const createAndSavePerson = (done) => {
-    var myPerson = new Person({name: "Charlie Brown", age: 84, favoriteFoods: ["eggs", "fish", "fresh fruit"]});
+//individual entry 
+var myPerson = new Person({name: "Charlie Brown", age: 84, favoriteFoods: ["eggs", "fish", "fresh fruit"]});
      
+const createAndSavePerson = (done) => {
      myPerson.save(function(err, data) {
     if (err) return console.error(err);
     done(null, data)});
 };
-
-
-//creating multiple db instances at once 
+       
+//multiple entries
 var arrayofPeople = [{name: "Mac Donald", age: 80, favoriteFoods: ["pizza", "fish", "fresh fruit"]},
    {name: "Snoop Dogg", age: 4, favoriteFoods: ["eggs", "fish", "chips"]},
    {name: "Charlie Mean", age: 32, favoriteFoods: ["eggs", "pizza", "onions"]}];
-       
 
-
-//create and save a model record instance
 const createManyPeople = (arrayofPeople, done) => {
 
      Person.create(arrayofPeople,function(err, people){
@@ -46,12 +43,21 @@ const createManyPeople = (arrayofPeople, done) => {
   
 };
 
+//searching using model.find() method
 const findPeopleByName = (personName, done) => {
-  done(null /*, data*/);
+
+  Person.find({name: personName}, function (err, personFound) {
+    if (err) return console.log(err);
+    done(null, personFound);
+    });
 };
 
+//Use model.findOne() to Return a Single Matching Document from Your Database
 const findOneByFood = (food, done) => {
-  done(null /*, data*/);
+  Person.findOne({favoriteFoods: food},function (err,data){
+  if (err) return console.log(err);
+  done(null , data);
+  });
 };
 
 const findPersonById = (personId, done) => {
